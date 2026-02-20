@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>カタカナ — Katakana Trainer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&family=DM+Mono:wght@300;400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./script.js" defer></script>
+    </head>
+<body>
+    <div class="app">
+    <header>
+        <div class="logo">
+            <span class="logo-jp">カタカナ</span>
+            <span class="logo-en">Katakana</span>
+        </div>
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchView('practice')">Practice</button>
+            <button class="tab-btn" onclick="switchView('progress')">Progress</button>
+        </div>
+    </header>
+
+    <!-- PRACTICE VIEW -->
+    <div class="view active" id="view-practice">
+        <div class="streak-bar">
+        <span class="streak-icon">🔥</span>
+        <div class="streak-info">
+            <div class="streak-label">Streak</div>
+            <div class="streak-count" id="streak-count">0</div>
+        </div>
+        <div class="session-stats">
+            <div class="stat-item">
+                <span class="stat-val green" id="session-correct">0</span>
+                <span class="stat-lbl">Correct</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-val red" id="session-wrong">0</span>
+                <span class="stat-lbl">Wrong</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="mode-selector">
+        <button class="mode-btn active" id="mode-smart" onclick="setMode('smart')">Smart (Adaptive)</button>
+        <button class="mode-btn" id="mode-all" onclick="setMode('all')">All Characters</button>
+        <button class="mode-btn" id="mode-review" onclick="setMode('review')">Review Weak</button>
+    </div>
+
+    <div class="card-container">
+        <div class="char-card" id="char-card">
+            <span class="char-display" id="char-display">ア</span>
+        </div>
+    </div>
+
+    <div class="hint-row" id="hint-row">
+        <div class="hint-dot" id="hint-0"></div>
+        <div class="hint-dot" id="hint-1"></div>
+        <div class="hint-dot" id="hint-2"></div>
+    </div>
+
+    <div class="input-area">
+        <input
+            class="romanji-input"
+            id="romanji-input"
+            type="text"
+            placeholder="type romaji..."
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            maxlength="4"
+        />
+        <div class="feedback-msg" id="feedback-msg"></div>
+            <button class="skip-btn" onclick="skipCurrent()">skip →</button>
+        </div>
+
+        <div class="queue-indicator" id="queue-indicator" style="display:none">
+            <span class="queue-label">Focus queue</span>
+            <div class="queue-chars" id="queue-chars"></div>
+        </div>
+    </div>
+
+    <!-- PROGRESS VIEW -->
+    <div class="view" id="view-progress">
+        <div class="progress-header">
+            <div class="progress-title">Your Progress</div>
+            <div class="progress-subtitle" id="last-session-text">—</div>
+        </div>
+
+    <div class="overall-stats">
+        <div class="stat-card">
+            <div class="stat-card-val" id="prog-total" style="color:var(--accent)">0</div>
+            <div class="stat-card-lbl">Seen</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-card-val" id="prog-mastered" style="color:var(--green)">0</div>
+            <div class="stat-card-lbl">Mastered</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-card-val" id="prog-struggling" style="color:var(--red)">0</div>
+            <div class="stat-card-lbl">Struggling</div>
+        </div>
+    </div>
+
+    <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--border)"></div>Unseen</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Mastered (≥70%)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--yellow)"></div>Learning</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>Struggling (&lt;50%)</div>
+    </div>
+
+    <div class="grid-section-title">Basic Katakana</div>
+        <div class="katakana-grid" id="grid-basic"></div>
+
+            <div class="grid-section-title">Compound & Special</div>
+            <div class="katakana-grid" id="grid-compound"></div>
+
+            <button class="reset-btn" onclick="resetData()">Reset all progress</button>
+        </div>
+    </div>
+
+    <div id="toaster"></div>
+    </body>
+</html>
